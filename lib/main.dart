@@ -14,12 +14,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePage extends StatelessWidget {
   int priceJacket1 = 250;
   int priceJacket2 = 350;
   int priceJacket3 = 300;
@@ -89,9 +84,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     scrollDirection: Axis.horizontal,
                     children: [
                       buildListitem(
-                          'assets/jaket1.jpg', 'Jaket Hoodie 1', priceJacket1),
+                          'assets/jaket1.jpg', 'Jaket Hoodie 1', priceJacket1, context),
                       buildListitem(
-                          'assets/jaket2.jpg', 'Jaket Hoodie 2', priceJacket2),
+                          'assets/jaket2.jpg', 'Jaket Hoodie 2', priceJacket2, context),
                     ],
                   ),
                 ),
@@ -205,21 +200,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget buildListitem(String nameImage, String nameJacket, int price) {
-    var colorFav = Colors.black;
-
-    void _colorChange() {
-      if (colorFav == Colors.black) {
-        setState(() {
-          colorFav = Colors.red;
-        });
-      } else if (colorFav == Colors.red) {
-        setState(() {
-          colorFav = Colors.black;
-        });
-      }
-    }
-
+  Widget buildListitem(String nameImage, String nameJacket, int price, BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.of(context).push((MaterialPageRoute(
@@ -278,10 +259,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 30.0,
                       width: 30.0,
                       child: Center(
-                        child: IconButton(
-                          icon: Icon(Icons.favorite, color: colorFav),
-                          onPressed: _colorChange,
-                        ),
+                        child: Icon(Icons.favorite, color: Colors.red),
                       ),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15.0),
