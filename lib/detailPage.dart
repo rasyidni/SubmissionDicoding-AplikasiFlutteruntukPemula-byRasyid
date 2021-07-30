@@ -1,16 +1,40 @@
 import 'package:flutter/material.dart';
 
 class DetailPage extends StatefulWidget {
-  final namagambar;
-  final namajaket;
-  final harga;
+  final nameImage;
+  final nameJacket;
+  final int price;
 
-  DetailPage({this.namagambar, this.namajaket, this.harga});
+  DetailPage({this.nameImage, this.nameJacket, this.price});
   @override
   _DetailPageState createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
+  int total = 1;
+  int totalPrice;
+
+  void _increment() {
+    setState(() {
+      total++;
+      totalPrice += widget.price;
+    });
+  }
+
+  void _decrement() {
+    setState(() {
+      total--;
+      totalPrice -= widget.price;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    totalPrice = widget.price;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,13 +61,13 @@ class _DetailPageState extends State<DetailPage> {
                 top: 50.0,
                 left: (MediaQuery.of(context).size.width / 2) - 125.0,
                 child: Hero(
-                  tag: widget.namagambar,
+                  tag: widget.nameImage,
                   child: Container(
                     height: 250.0,
                     width: 250.0,
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage(widget.namagambar),
+                            image: AssetImage(widget.nameImage),
                             fit: BoxFit.cover)),
                   ),
                 ),
@@ -77,7 +101,7 @@ class _DetailPageState extends State<DetailPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.namajaket,
+                Text(widget.nameJacket,
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontSize: 25.0,
@@ -107,7 +131,7 @@ class _DetailPageState extends State<DetailPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      widget.harga,
+                      'Rp. ${widget.price}k',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold,
@@ -126,10 +150,10 @@ class _DetailPageState extends State<DetailPage> {
                           IconButton(
                             icon: Icon(Icons.remove_circle_outline,
                                 color: Colors.blueAccent),
-                            onPressed: () {},
+                            onPressed: _decrement,
                           ),
                           Text(
-                            '3',
+                            '$total',
                             style: TextStyle(
                                 fontFamily: 'Montserrat',
                                 fontSize: 20.0,
@@ -138,7 +162,7 @@ class _DetailPageState extends State<DetailPage> {
                           IconButton(
                             icon: Icon(Icons.add_circle,
                                 color: Colors.blueAccent),
-                            onPressed: () {},
+                            onPressed: _increment,
                           )
                         ],
                       ),
@@ -182,7 +206,7 @@ class _DetailPageState extends State<DetailPage> {
                         ),
                         SizedBox(width: 10.0),
                         Text(
-                          '\Rp. 750k',
+                          '\Rp. ${totalPrice}k',
                           style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontSize: 18.0,
